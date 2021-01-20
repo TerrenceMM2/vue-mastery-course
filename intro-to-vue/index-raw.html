@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="nav-bar"></div>
+
+    <div id="app">
+        <div class="product">
+
+            <div class="product-image">
+                <!-- <img v-bind:src="image" /> -->
+                <!-- HINT: v-bind shorthand -->
+                <img :src="image" />
+            </div>
+
+            <div class="product-info">
+                <!-- <h1>{{ product }}</h1> -->
+
+                <!-- VUE Concept - Conputed Properties -->
+                <h1>{{ title }}</h1>
+
+                <!-- VUE Concept - Conditional Rendering -->
+                <!-- <p v-if="inventory > 10">In Stock</p>
+                <p v-else-if="inventory <= 10 && inventory > 0">Almost out of stock</p>
+                <p v-else>Out of Stock</p> -->
+
+                <!-- Truthy Conditional Rendering -->
+                <!-- <p v-if="inStock">In Stock</p> -->
+
+                <!-- Displayed Render (for better performance; element is still on the DOM) -->
+                <!-- <p v-show="inStock">In Stock</p> -->
+
+                <p v-if="inStock">In Stock</p>
+                <p v-else :class="{ outOfStock: !inStock }">Out of Stock</p>
+
+
+                <!-- VUE Concept - List Rendering -->
+                <ul> 
+                    <li v-for="detail in details">{{ detail }}</li>
+                </ul>
+
+                <!-- <div v-for="variant in variants" :key="variant.variantId"> -->
+                    <!-- @mouseover is shorthand for v-on -->
+                    <!-- <p @mouseover="updateProduct(variant.variantImage)">{{ variant.variantColor }}</p> -->
+                    <!-- Other shorthands: @click, @submit, @keyup.enter -->
+                <!-- </div> -->
+
+
+                <!-- VUE Concept - Style Binding -->
+                <div v-for="(variant, index) in variants"
+                    :key="variant.variantId"
+                    class="color-box"
+                    :style="{ backgroundColor: variant.variantColor }"
+                    @mouseover="updateProduct(index)"
+                    >
+                </div>
+                <!-- : = "Vue binding" -->
+
+                <!-- VUE Concept - Event Handling -->
+                <button v-on:click="addToCart"
+                    :disabled="!inStock"
+                    :class="{ disabledButton: !inStock }"
+                    >
+                    Add to Cart
+                </button>
+                <!-- NOTE: Vue expressions require camelCase syntax -->
+
+                <div class="cart">
+                    <p>Cart({{cart}})</p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="main.js"></script>
+    
+</body>
+</html>
