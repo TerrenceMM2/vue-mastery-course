@@ -8,9 +8,20 @@
         <header class="card-header">
           <p class="card-header-title">heroes list</p>
         </header>
+        <ul class="list is-hoverable">
+          <li v-for="hero in heroes" :key="hero.id">
+            <a
+              class="list-item"
+              @click="selectedHero = hero"
+              :class="{ 'is-active': selectedHero === hero }"
+            >
+              <span>{{ hero.firstName }}</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
-    <div class="columns">
+    <div class="columns" v-if="selectedHero">
       <div class="column is-3">
         <header class="card-header">
           <p class="card-header-title">{{ selectedHero.firstName }}</p>
@@ -32,6 +43,17 @@
               />
             </div>
             <div class="field">
+              <label for="show" class="checkbox"
+                >Show More
+                <input
+                  type="checkbox"
+                  class="is-primary"
+                  id="show"
+                  v-model="showMore"
+                />
+              </label>
+            </div>
+            <div class="field" v-show="showMore">
               <label class="label" for="lastName">last name</label>
               <input
                 class="input"
@@ -39,7 +61,7 @@
                 v-model="selectedHero.lastName"
               />
             </div>
-            <div class="field">
+            <div class="field" v-show="showMore">
               <label class="label" for="description">description</label>
               <input
                 class="input"
@@ -59,12 +81,8 @@ export default {
   name: 'Heroes',
   data() {
     return {
-      selectedHero: {
-        id: 111,
-        firstName: '...',
-        lastName: '...',
-        description: '...',
-      },
+      selectedHero: undefined,
+      showMore: false,
       heroes: [
         {
           id: 10,
