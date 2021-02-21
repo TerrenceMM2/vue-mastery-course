@@ -297,3 +297,5 @@ export default {
     3. Communicate UP with events.
 
 ## 07
+
+-   This course uses Axios, .env, try/catch, and error handling.

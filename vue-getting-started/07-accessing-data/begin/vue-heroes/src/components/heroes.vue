@@ -58,21 +58,21 @@ export default {
     HeroDetail,
   },
   mixins: [lifecycleHooks, heroWatchers],
-  created() {
-    this.loadHeroes();
+  async created() {
+    await this.loadHeroes();
   },
   methods: {
-    loadHeroes() {
+    async loadHeroes() {
       this.heroes = [];
       this.message = 'getting the heroes, please be patient';
-      this.heroes = data.ourHeroes;
+      this.heroes = await data.getHeroes();
       this.message = '';
     },
     cancelHero() {
       this.selectedHero = undefined;
     },
     saveHero(hero) {
-      const index = this.heroes.findIndex(h => h.id === hero.id);
+      const index = this.heroes.findIndex((h) => h.id === hero.id);
       this.heroes.splice(index, 1, hero);
       this.heroes = [...this.heroes];
       this.selectedHero = undefined;
